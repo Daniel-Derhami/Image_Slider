@@ -1,17 +1,33 @@
-var slideIndex = 1;
-showDivs(slideIndex);
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+const images = document.querySelector('.carousel').children;
+const totalImages = images.length;
+let index = 0;
 
-function plusDivs(n) {
-    showDivs (slideIndex += n);
-}
+prev.addEventListener('click', () => {
+  nextImage('prev');
+})
 
-function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.lenght}
-    for (i = 0; i < x.length; i++){
-        x[i].style.display = "none";
+next.addEventListener('click', () => {
+  nextImage('next');
+})
+
+function nextImage(direction) {
+  if(direction == 'next') {
+    index++;
+    if(index == totalImages) {
+      index = 0;
     }
-    x[slideIndex-1].style.display = "block";
+  } else {
+    if(index == 0) {
+      index = totalImages - 1;
+    } else {
+      index--;
+    }
+  }
+
+  for(let i = 0; i < images.length; i++) {
+    images[i].classList.remove('main');
+  }
+  images[index].classList.add('main');
 }
